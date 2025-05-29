@@ -1,0 +1,52 @@
+
+// POSTS
+// Action Types for Post Management
+export const FETCH_POSTS_REQUEST = 'FETCH_POSTS_REQUEST';
+export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';
+export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE';
+
+
+// Action Types for Post Creation
+export const CREATE_POST_REQUEST = 'CREATE_POST_REQUEST';
+export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS';
+export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE';
+
+// Action Types for Post Update
+export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
+export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
+
+// Action Types for Post Deletion
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+
+// Action Types for Post Like
+export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
+export const LIKE_POST_SUCCESS = 'LIKE_POST_SUCCESS';
+export const LIKE_POST_FAILURE = 'LIKE_POST_FAILURE';
+
+// Action Types for Post Comment
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
+// Action Types for Comment Deletion
+export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+
+// Action Types for Post Fetching by User
+export const FETCH_USER_POSTS_REQUEST = 'FETCH_USER_POSTS_REQUEST';
+export const FETCH_USER_POSTS_SUCCESS = 'FETCH_USER_POSTS_SUCCESS';
+export const FETCH_USER_POSTS_FAILURE = 'FETCH_USER_POSTS_FAILURE';
+
+// Action Types for Post Search
+export const SEARCH_POSTS_REQUEST = 'SEARCH_POSTS_REQUEST';
+export const SEARCH_POSTS_SUCCESS = 'SEARCH_POSTS_SUCCESS';
+export const SEARCH_POSTS_FAILURE = 'SEARCH_POSTS_FAILURE';
+
+
+
+
+
