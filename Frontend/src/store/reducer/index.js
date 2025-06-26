@@ -5,3 +5,5 @@ const rootReducer = combineReducers({
     post: postReducer,
     // Add other reducers here as needed
 });
+
+export default rootReducer;

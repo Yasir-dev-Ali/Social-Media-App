@@ -1,0 +1,11 @@
+
+FIR RECEIPT
+-----------
+FIR ID: FIR1748859511950551
+Date Filed: 6/2/2025
+Time Filed: 3:18:31 PM
+Name: test
+CNIC: 12344-4454543-4
+Crime Type: theft
+Status: Submitted Successfully
+    

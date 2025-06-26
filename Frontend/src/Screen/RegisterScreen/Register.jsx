@@ -58,17 +58,7 @@ const LoginScreen = () => {
                             required
                         />
                     </div>
-                    <div>
-                        <TextField
-                            fullWidth
-                            label="Confirm Password"
-                            type="password"
-                            name="confirmPassword"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                    
                     <Button fullWidth variant="contained" type="submit">
                         Register
                     </Button>
