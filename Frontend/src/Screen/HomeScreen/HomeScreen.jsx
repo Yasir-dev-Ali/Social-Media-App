@@ -1,5 +1,6 @@
 import React from 'react'
 import HeroSection from '../HeroScreen/HeroSection'
+import LatestPostScreen from '../LatestPostScreen/LatestPostScreen'
 
 const HomeScreen = () => {
   return (
@@ -14,7 +15,7 @@ const HomeScreen = () => {
             for everyone here. Dive in and start your journey with us today!
 
           </p>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          <button className="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600">
             Get Started
           </button>
         </div>
@@ -28,7 +29,8 @@ const HomeScreen = () => {
 
         </div>
       </div>
-      {/* <HeroSection /> */}
+      <HeroSection />
+      <LatestPostScreen />
       </>
   )
 }
