@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addComment, createPost, deletePost, getAllPosts, getPostById, likePost, updatePost } from '../controller/post.controller.js';
+import { addComment, createPost, deletePost, getAllPosts, getPostById, getPostsByUser, likePost, updatePost } from '../controller/post.controller.js';
 import authMiddleware from '../middleware/auth.middleware.js';
 // import upload from '../middleware/multer.middleware.js';
 
@@ -12,6 +12,7 @@ const router = Router();
 router.post('/createpost',authMiddleware, createPost); // Assuming you want to use the same controller for creating posts
 // Get all posts
 router.get('/posts', getAllPosts);
+router.get('/posts/myposts', authMiddleware, getPostsByUser); // Assuming you want to get posts by the authenticated user
 // Get single post
 router.get('/posts/:id', getPostById);
 // Update post

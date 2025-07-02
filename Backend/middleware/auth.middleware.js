@@ -1,3 +1,8 @@
+
+import jwt from 'jsonwebtoken';
+import User from '../models/user.model.js';
+
+
 const authMiddleware = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
@@ -7,6 +12,7 @@ const authMiddleware = async (req, res, next) => {
         }
 
         const token = authHeader.split(' ')[1];
+        console.log('Token received:', token);
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         // ✅ Use decoded._id instead of decoded.id

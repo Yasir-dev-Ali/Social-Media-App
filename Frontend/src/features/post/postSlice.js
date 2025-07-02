@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from '../../app/axiosInstance.js';
 import { message } from 'antd';
 
-// GET all posts
+// GET all  posts
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, thunkAPI) => {
     try {
         const res = await API.get('/posts');
@@ -12,6 +12,25 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, thunkAP
         return thunkAPI.rejectWithValue(err.response.data);
     }
 });
+// Get by  posts by user
+    export const fetchUserPosts = createAsyncThunk(
+        'posts/fetchUserPosts',
+        async (_, thunkAPI) => {
+            try {
+                const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+
+                const res = await API.get('/posts/myposts', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                return res.data;
+            } catch (err) {
+                return thunkAPI.rejectWithValue(err.response?.data || { message: 'Something went wrong' });
+            }
+        });
+
 
 // CREATE post
 export const createPost = createAsyncThunk('posts/createPost', async (data, thunkAPI) => {
@@ -60,13 +79,13 @@ const postSlice = createSlice({
             })
             // .addCase(fetchPosts.fulfilled, (state, action) => {
             //     state.loading = false;
-        //     state.posts = action.payload;
+            //     state.posts = action.payload;
             .addCase(fetchPosts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.posts = action.payload.posts; // ✅ instead of action.payload
             })
-        
-            
+
+
             .addCase(fetchPosts.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.message;
@@ -87,6 +106,18 @@ const postSlice = createSlice({
             .addCase(addComment.fulfilled, (state, action) => {
                 const post = state.posts.find((p) => p._id === action.payload.postId);
                 if (post) post.comments = action.payload.comments;
+            })
+            .addCase(fetchUserPosts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchUserPosts.fulfilled, (state, action) => {
+                state.loading = false;
+                state.posts = action.payload;
+            })
+            .addCase(fetchUserPosts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
             });
     },
 });

@@ -1,4 +1,6 @@
 import Post from "../models/post.model.js";
+import jwt from "jsonwebtoken";
+
 
 // Create a new post
 export const createPost = async (req, res) => {
@@ -66,11 +68,33 @@ export const getAllPosts = async (req, res) => {
 
         // console.log('✅ Posts:', posts); // <== Add this
         res.status(200).json({ message: "Posts fetched successfully", posts });
+        
     } catch (error) {
         console.error("❌ Error in getAllPosts:", error); // <== Add this
         res.status(500).json({ message: "Failed to fetch posts", error: error.message });
     }
 };
+
+// get all posts by user
+export const getPostsByUser = async (req, res) => {
+    try {
+        const posts = await Post.find({ creator: req.user._id })
+            .populate("creator", "name email")
+            .populate("comments.user", "name")
+            .sort({ createdAt: -1 });
+
+        if (!posts || posts.length === 0) {
+            return res.status(404).json({ message: "No posts found for this user" });
+        }
+
+        res.status(200).json({ message: "Posts fetched successfully", posts });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch user's posts", error: error.message });
+    }
+}
+
+
+
   
 
 // Get single post

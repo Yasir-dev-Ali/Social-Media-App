@@ -1,4 +1,4 @@
-import React from 'react'
+
 import HeroSection from '../HeroScreen/HeroSection'
 import LatestPostScreen from '../LatestPostScreen/LatestPostScreen'
 

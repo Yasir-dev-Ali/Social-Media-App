@@ -2,11 +2,12 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const user = useSelector((state) => state.auth?.user);
+    // const user = useSelector((state) => state.auth?.user);
+    const user = JSON.parse(localStorage.getItem('user')); // If not using Redux
 
     const commonItems = [
         { name: 'Home', path: '/' },
