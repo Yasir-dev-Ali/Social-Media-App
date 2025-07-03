@@ -5,40 +5,95 @@ import { message } from 'antd';
 
 
 // === Async Thunks ===
-export const loginUser = createAsyncThunk('auth/loginUser', async (userData, { rejectWithValue }) => {
-    try {
-        const response = await API.post('/login', userData);
-        return response.data;
-    } catch (error) {
-        return rejectWithValue(error.response.data);
-    }
-});
+// export const loginUser = createAsyncThunk('auth/loginUser', async (userData, { rejectWithValue }) => {
+//     try {
+//         const response = await API.post('/login', userData);
+
+//         console.log("Login User Response:", response.data);
+//         // localSotrage save it
+//         localStorage.setItem('user', JSON.stringify({
+//             token: res.data.token,
+//             _id: res.data.user._id,
+//             name: res.data.user.name
+//           }));
+
+//         return response.data;
+//     } catch (error) {
+//         return rejectWithValue(error.response.data);
+//     }
+// });
+// export const registerUser = createAsyncThunk('auth/registerUser', async (userData, { rejectWithValue }) => {
+//     try {
+//         const response = await API.post('/user', userData);
+//         console.log("Register User Response:", response.data);
+
+
+//         if (!response.data || !response.data.user) {
+//             throw new Error("User not found in response");
+//         }
+        
+//         // Optionally, you can also log in the user after registration
+//         // const loginResponse = await API.post('/auth/login', userData);
+//         return response.data;
+        
+//     } catch (error) {
+//         return rejectWithValue(error.response.data);
+//     }
+// });
+
+// Register user
 export const registerUser = createAsyncThunk('auth/registerUser', async (userData, { rejectWithValue }) => {
     try {
         const response = await API.post('/user', userData);
         console.log("Register User Response:", response.data);
 
-
         if (!response.data || !response.data.user) {
             throw new Error("User not found in response");
         }
-        
-        // Optionally, you can also log in the user after registration
-        // const loginResponse = await API.post('/auth/login', userData);
+
+        // ✅ Save token after successful registration
+        localStorage.setItem('user', JSON.stringify({
+            token: response.data.token,
+            _id: response.data.user._id,
+            name: response.data.user.name
+        }));
+        console.log("User registered successfully:", response.data);
+
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || { message: error.message });
+    }
+});
+
+
+// Login user
+
+export const loginUser = createAsyncThunk('auth/loginUser', async (userData, { rejectWithValue }) => {
+    try {
+        const response = await API.post('/login', userData);
+
+        console.log("Login User Response:", response.data);
+
+        // ✅ Correct localStorage saving
+        localStorage.setItem('user', JSON.stringify({
+            token: response.data.token,
+            _id: response.data.user._id,
+            name: response.data.user.name
+        }));
+        console.log("User logged in successfully:", response.data);
+
         return response.data;
         
     } catch (error) {
-        return rejectWithValue(error.response.data);
+        return rejectWithValue(error.response?.data || { message: error.message });
     }
 });
-export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, { rejectWithValue }) => {
-    try {
-        await API.post('/logout');
-        return;
-    } catch (error) {
-        return rejectWithValue(error.response.data);
-    }
-});
+
+
+
+
+
+// Fetch user profile
 export const fetchUserProfile = createAsyncThunk('auth/fetchUserProfile', async (_, { rejectWithValue }) => {
     try {
         const response = await API.get('/auth/profile');
@@ -47,6 +102,8 @@ export const fetchUserProfile = createAsyncThunk('auth/fetchUserProfile', async 
         return rejectWithValue(error.response.data);
     }
 });
+
+// Update user profile
 export const updateUserProfile = createAsyncThunk('auth/updateUserProfile', async (userData, { rejectWithValue }) => {
     try {
         const response = await API.put('/auth/profile', userData);
@@ -56,6 +113,19 @@ export const updateUserProfile = createAsyncThunk('auth/updateUserProfile', asyn
         return rejectWithValue(error.response.data);
     }
 });
+
+// Logout user
+export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, { rejectWithValue }) => {
+    try {
+        // Invalidate the token on the client side by removing it from localStorage
+        localStorage.removeItem('user');
+        return;
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+}
+);
+
 
 
 
@@ -121,6 +191,9 @@ export const updateUserProfile = createAsyncThunk('auth/updateUserProfile', asyn
             .addCase(logoutUser.fulfilled, (state) => {
                 state.isLoading = false;
                 state.user = null;
+                state.error = null;
+                localStorage.removeItem('user'); // Clear user data from localStorage
+                state.token = null; // Clear token from state
                 toast.success('Logout successful');
             })
             .addCase(logoutUser.rejected, (state, action) => {

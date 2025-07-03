@@ -36,7 +36,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, thunkAP
 export const createPost = createAsyncThunk('posts/createPost', async (data, thunkAPI) => {
     try {
         const res = await API.post('/createpost', data);
-        console.log('Post created:', res.data.post);
+        // console.log('Post created:', res.data.post);
         message.success('Post created');
         return res.data.post;
     } catch (err) {

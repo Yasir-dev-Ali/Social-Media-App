@@ -42,18 +42,6 @@ export const createPost = async (req, res) => {
     }
 };
 
-// Get all posts
-// export const getAllPosts = async (req, res) => {
-//     try {
-//         const posts = await Post.find()
-//             .populate("creator", "name email")
-//             .sort({ createdAt: -1 });
-
-//         res.status(200).json({ message: "Posts fetched successfully", posts });
-//     } catch (error) {
-//         res.status(500).json({ message: "Failed to fetch posts", error: error.message });
-//     }
-// };
 export const getAllPosts = async (req, res) => {
     try {
         // const posts = await Post.find().populate("user").populate("creater");
@@ -76,23 +64,39 @@ export const getAllPosts = async (req, res) => {
 };
 
 // get all posts by user
+// export const getPostsByUser = async (req, res) => {
+//     try {
+//         const posts = await Post.find({ creator: req.user._id })
+//             .populate("creator", "name email")
+//             .populate("comments.user", "name")
+//             .sort({ createdAt: -1 });
+
+//         if (!posts || posts.length === 0) {
+//             return res.status(404).json({ message: "No posts found for this user" });
+//         }
+
+//         res.status(200).json({ message: "Posts fetched successfully", posts });
+//     } catch (error) {
+//         res.status(500).json({ message: "Failed to fetch user's posts", error: error.message });
+//     }
+// }
+
+// ✅ In controller
 export const getPostsByUser = async (req, res) => {
     try {
-        const posts = await Post.find({ creator: req.user._id })
-            .populate("creator", "name email")
-            .populate("comments.user", "name")
-            .sort({ createdAt: -1 });
-
+        const posts = await Post.find({ creator: req.user._id }).populate('creator', 'name');
+        // console.log('User Posts:', posts); // Debugging line
         if (!posts || posts.length === 0) {
             return res.status(404).json({ message: "No posts found for this user" });
         }
+        // Populate creator with name and email
 
-        res.status(200).json({ message: "Posts fetched successfully", posts });
-    } catch (error) {
-        res.status(500).json({ message: "Failed to fetch user's posts", error: error.message });
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch posts', error: err.message });
     }
-}
-
+};
+  
 
 
   

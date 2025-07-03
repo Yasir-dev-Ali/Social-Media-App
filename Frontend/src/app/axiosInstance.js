@@ -8,7 +8,7 @@ const API = axios.create({
     },
 });
 
-// ✅ Automatically attach token from localStorage
+//  Automatically attach token from localStorage
 API.interceptors.request.use((config) => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user?.token) {
@@ -16,5 +16,20 @@ API.interceptors.request.use((config) => {
     }
     return config;
 });
+// Handle errors globally
+API.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            // Handle unauthorized access, e.g., redirect to login
+            console.error('Unauthorized access - redirecting to login');
+            // Optionally, you can redirect to a login page here
+        } else {
+            console.error('API Error:', error);
+        }
+        return Promise.reject(error);
+    }
+);
+
 
 export default API;

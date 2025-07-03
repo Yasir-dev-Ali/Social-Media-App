@@ -143,6 +143,7 @@ export const LogoutUser = async (req, res) => {
         res.status(500).json({ message: "Failed to log out user", error: error.message });
     }
 }
+
 export const GetUserProfile = async (req, res) => {
     try {
         const userId = req.user._id; // Assuming user ID is stored in req.user by middleware
